@@ -1,48 +1,47 @@
 # .pre-commit-hooks.yaml
-      - --all-files
-      - ./.mobile-security.yaml
-      - --config
-      - run
-    args:
-    files: '.*'
-    language: python
-    entry: pre-commit
-    name: Security Profile - Mobile
--   id: security-profile-mobile
-
-      - --all-files
-      - ./.infra-security.yaml
-      - --config
-      - run
-    args:
-    files: '.*'
-    language: python
-    entry: pre-commit
-    name: Security Profile - Infrastructure
--   id: security-profile-infra
-
-      - --all-files
-      - ./.web-app-security.yaml
-      - --config
-      - run
-    args:
-    files: '.*'
-    language: python
-    entry: pre-commit
-    name: Security Profile - Web Application
--   id: security-profile-web-app
-
-      - --all-files
-      - ./.base-security.yaml
-      - --config
-      - run
-    args:
-    files: '.*'
-    language: python
-    entry: pre-commit
-    name: Security Profile - Base
--   id: security-profile-base
-
-# Managed exclusively by the AppSec Team
 # Centralized AppSec Pre-Commit Hooks
+# Managed exclusively by the AppSec Team
 
+-   id: security-profile-base
+    name: Security Profile - Base
+    entry: pre-commit
+    language: python
+    files: '.*'
+    args:
+      - run
+      - --config
+      - ./.base-security.yaml
+      - --all-files
+
+-   id: security-profile-web-app
+    name: Security Profile - Web Application
+    entry: pre-commit
+    language: python
+    files: '.*'
+    args:
+      - run
+      - --config
+      - ./.web-app-security.yaml
+      - --all-files
+
+-   id: security-profile-infra
+    name: Security Profile - Infrastructure
+    entry: pre-commit
+    language: python
+    files: '.*'
+    args:
+      - run
+      - --config
+      - ./.infra-security.yaml
+      - --all-files
+
+-   id: security-profile-mobile
+    name: Security Profile - Mobile
+    entry: pre-commit
+    language: python
+    files: '.*'
+    args:
+      - run
+      - --config
+      - ./.mobile-security.yaml
+      - --all-files
