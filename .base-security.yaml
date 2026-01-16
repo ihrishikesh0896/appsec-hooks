@@ -1,0 +1,30 @@
+# .base-security.yaml
+# Base Security Profile - Minimal security controls for all repositories
+# Includes: Secret detection, basic security linting
+
+repos:
+  # Secret Detection - Gitleaks
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.4
+    hooks:
+      - id: gitleaks
+
+  # General Security Linting - Semgrep
+  - repo: https://github.com/returntocorp/semgrep
+    rev: v1.78.0
+    hooks:
+      - id: semgrep
+        args:
+          - --config=p/secrets
+          - --config=p/security-audit
+          - --error
+
+  # Prevent committing sensitive files
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: detect-private-key
+      - id: check-added-large-files
+        args: ['--maxkb=1000']
+      - id: check-merge-conflict
+

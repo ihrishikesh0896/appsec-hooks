@@ -1,0 +1,46 @@
+# .infra-security.yaml
+# Infrastructure Security Profile
+# Includes: Terraform, Kubernetes, CloudFormation security scanning
+
+repos:
+  # Secret Detection - Gitleaks
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.4
+    hooks:
+      - id: gitleaks
+
+  # Basic file checks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: detect-private-key
+      - id: check-added-large-files
+        args: ['--maxkb=1000']
+      - id: check-merge-conflict
+
+  # Terraform security
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.92.0
+    hooks:
+      - id: terraform_tfsec
+      - id: terraform_checkov
+      - id: terraform_validate
+
+  # Infrastructure Security - Semgrep
+  - repo: https://github.com/returntocorp/semgrep
+    rev: v1.78.0
+    hooks:
+      - id: semgrep
+        args:
+          - --config=p/kubernetes
+          - --config=p/terraform
+          - --config=p/secrets
+          - --error
+
+  # CloudFormation linting
+  - repo: https://github.com/aws-cloudformation/cfn-lint
+    rev: v1.4.2
+    hooks:
+      - id: cfn-lint
+        files: \.ya?ml$
+
