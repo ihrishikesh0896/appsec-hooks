@@ -1,8 +1,9 @@
--   id: gitleaks-system
-    name: Detect hardcoded secrets
-    description: Detect hardcoded secrets using Gitleaks
-    entry: gitleaks git --pre-commit --redact --staged --verbose
+-   id: gitleaks
+    name: Gitleaks
+    description: "Scans for hardcoded secrets"
+    entry: gitleaks detect --source --pre-commit --redact --staged --verbose
     language: system
+    image: zricethezav/gitleaks:latest
 
 -   id: semgrep-sast
     name: Semgrep SAST
