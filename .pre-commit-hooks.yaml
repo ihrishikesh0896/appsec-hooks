@@ -1,28 +1,43 @@
--   id: gitleaks
-    name: Gitleaks
-    description: "Scans for hardcoded secrets"
-    entry: gitleaks detect --source . --redact --verbose
-    language: system
-    image: zricethezav/gitleaks:latest
+repos:
+  - repo: local
+    hooks:
+      # 🔐 Secrets Detection
+      - id: gitleaks
+        name: Gitleaks – Secrets Scanning
+        entry: gitleaks detect --source . --redact --verbose
+        language: system
+        image: zricethezav/gitleaks:latest
+        pass_filenames: false
+        stages: [commit]
 
--   id: semgrep-sast
-    name: Semgrep SAST
-    description: "Static analysis for security vulnerabilities"
-    entry: semgrep --config=auto --error
-    language: system
-    image: semgrep/semgrep
+      # 🧠 SAST
+      - id: semgrep-sast
+        name: Semgrep – SAST
+        entry: semgrep --config=auto --error
+        language: system
+        image: semgrep/semgrep
+        pass_filenames: false
+        stages: [commit]
 
--   id: checkov-iac
-    name: Checkov IaC
-    description: "Scans infrastructure as code for misconfigurations"
-    entry: checkov --directory .
-    language: system
-    image: bridgecrew/checkov:latest
+      # ☁️ IaC Security
+      - id: checkov-iac
+        name: Checkov – IaC Scan
+        entry: checkov --directory .
+        language: system
+        image: bridgecrew/checkov:latest
+        pass_filenames: false
+        stages: [commit]
 
--   id: corporate-security-critical
-    name: Corporate Security Critical
-    description: "Runs all critical security checks"
-    entry: bash -c 'pre-commit run gitleaks && pre-commit run semgrep-sast'
-    language: system
-    pass_filenames: false
-    always_run: true
+      # 🚨 Aggregated Security Gate
+      - id: corporate-security-critical
+        name: Corporate Security – Critical Gate
+        entry: >
+          bash -c "
+          pre-commit run gitleaks &&
+          pre-commit run semgrep-sast &&
+          pre-commit run checkov-iac
+          "
+        language: system
+        pass_filenames: false
+        always_run: true
+        stages: [commit]
