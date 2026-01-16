@@ -2,21 +2,21 @@
     name: Gitleaks
     description: "Scans for hardcoded secrets"
     entry: gitleaks detect --source . --report-path /dev/stdout --verbose
-    language: docker_image
+    language: system
     image: zricethezav/gitleaks:latest
 
 -   id: semgrep-sast
     name: Semgrep SAST
     description: "Static analysis for security vulnerabilities"
     entry: semgrep --config=auto --error
-    language: docker_image
+    language: system
     image: semgrep/semgrep
 
 -   id: checkov-iac
     name: Checkov IaC
     description: "Scans infrastructure as code for misconfigurations"
     entry: checkov --directory .
-    language: docker_image
+    language: system
     image: bridgecrew/checkov:latest
 
 -   id: corporate-security-critical
