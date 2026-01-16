@@ -1,7 +1,7 @@
 -   id: gitleaks
     name: Gitleaks
     description: "Scans for hardcoded secrets"
-    entry: gitleaks detect --source --pre-commit --redact --staged --verbose
+    entry: gitleaks detect --source --pre-commit --redact --verbose
     language: system
     image: zricethezav/gitleaks:latest
 
