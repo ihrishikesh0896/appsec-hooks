@@ -45,4 +45,3 @@ repos:
       - id: bandit
         args: ['-r', '-ll']
         exclude: tests/
-

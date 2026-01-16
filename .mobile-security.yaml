@@ -35,4 +35,3 @@ repos:
     hooks:
       - id: swiftlint
         args: ['--strict']
-

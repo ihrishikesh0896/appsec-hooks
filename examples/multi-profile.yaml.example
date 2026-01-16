@@ -7,7 +7,7 @@ repos:
   # Primary: Web Application Security
   # Runs on all files
   # ============================================
-  - repo: https://github.com/company-org/appsec-hooks
+  - repo: https://github.com/ihrishikesh0896/appsec-hooks
     rev: v1.0.0
     hooks:
       - id: security-profile-web-app
@@ -17,7 +17,7 @@ repos:
   # Secondary: Infrastructure Security
   # Runs only on IaC files
   # ============================================
-  - repo: https://github.com/company-org/appsec-hooks
+  - repo: https://github.com/ihrishikesh0896/appsec-hooks
     rev: v1.0.0
     hooks:
       - id: security-profile-infra

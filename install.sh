@@ -1,10 +1,10 @@
 #!/bin/bash
 # install.sh - AppSec Hooks Installation Script
-# Usage: curl -sSL https://raw.githubusercontent.com/company-org/appsec-hooks/main/install.sh | bash
+# Usage: curl -sSL https://raw.githubusercontent.com/ihrishikesh0896/appsec-hooks/main/install.sh | bash
 
 set -e
 
-APPSEC_REPO="https://github.com/company-org/appsec-hooks"
+APPSEC_REPO="https://github.com/ihrishikesh0896/appsec-hooks"
 LATEST_VERSION="v1.0.0"
 
 # Colors for output

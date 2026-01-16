@@ -9,7 +9,7 @@ Centralized security controls for all repositories. Managed by the AppSec team.
 ### One-Line Installation
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/company-org/appsec-hooks/main/install.sh | bash
+curl -sSL https://raw.githubusercontent.com/ihrishikesh0896/appsec-hooks/main/install.sh | bash
 ```
 
 ### Manual Installation
@@ -18,7 +18,7 @@ curl -sSL https://raw.githubusercontent.com/company-org/appsec-hooks/main/instal
 
 ```yaml
 repos:
-  - repo: https://github.com/company-org/appsec-hooks
+  - repo: https://github.com/ihrishikesh0896/appsec-hooks
     rev: v1.0.0  # Use latest tagged version
     hooks:
       - id: security-profile-web-app  # Choose your profile
@@ -78,14 +78,14 @@ For projects that span multiple domains (e.g., a web app with infrastructure cod
 # .pre-commit-config.yaml
 repos:
   # Primary: Web Application Security Profile
-  - repo: https://github.com/company-org/appsec-hooks
+  - repo: https://github.com/ihrishikesh0896/appsec-hooks
     rev: v1.0.0
     hooks:
       - id: security-profile-web-app
         stages: [commit]
 
   # Secondary: Run infra checks only on IaC files
-  - repo: https://github.com/company-org/appsec-hooks
+  - repo: https://github.com/ihrishikesh0896/appsec-hooks
     rev: v1.0.0
     hooks:
       - id: security-profile-infra

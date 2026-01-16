@@ -43,4 +43,3 @@ repos:
     hooks:
       - id: cfn-lint
         files: \.ya?ml$
-
