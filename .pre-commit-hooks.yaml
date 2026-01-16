@@ -1,24 +1,23 @@
 -   id: gitleaks
     name: Gitleaks
     description: "Scans for hardcoded secrets"
-    entry: gitleaks protect --staged --verbose
-    language: golang
-    types: [text]
+    entry: gitleaks detect --source . --report-path /dev/stdout --verbose
+    language: docker_image
+    image: zricethezav/gitleaks:latest
 
 -   id: semgrep-sast
     name: Semgrep SAST
     description: "Static analysis for security vulnerabilities"
     entry: semgrep --config=auto --error
-    language: python
-    types: [python]
-    require_serial: true
+    language: docker_image
+    image: semgrep/semgrep
 
 -   id: checkov-iac
     name: Checkov IaC
     description: "Scans infrastructure as code for misconfigurations"
-    entry: checkov -f
-    language: python
-    types: [terraform]
+    entry: checkov --directory .
+    language: docker_image
+    image: bridgecrew/checkov:latest
 
 -   id: corporate-security-critical
     name: Corporate Security Critical
@@ -27,3 +26,4 @@
     language: system
     pass_filenames: false
     always_run: true
+
