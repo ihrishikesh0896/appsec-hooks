@@ -1,12 +1,10 @@
 # .pre-commit-hooks.yaml
-# Centralized AppSec Pre-Commit Hooks
-# Managed exclusively by the AppSec Team
-
 -   id: security-profile-base
     name: Security Profile - Base
     entry: pre-commit
-    language: python
+    language: system
     files: '.*'
+    pass_filenames: false
     args:
       - run
       - --config
@@ -16,8 +14,9 @@
 -   id: security-profile-web-app
     name: Security Profile - Web Application
     entry: pre-commit
-    language: python
+    language: system
     files: '.*'
+    pass_filenames: false
     args:
       - run
       - --config
@@ -27,8 +26,9 @@
 -   id: security-profile-infra
     name: Security Profile - Infrastructure
     entry: pre-commit
-    language: python
+    language: system
     files: '.*'
+    pass_filenames: false
     args:
       - run
       - --config
@@ -38,8 +38,9 @@
 -   id: security-profile-mobile
     name: Security Profile - Mobile
     entry: pre-commit
-    language: python
+    language: system
     files: '.*'
+    pass_filenames: false
     args:
       - run
       - --config
