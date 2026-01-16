@@ -1,48 +1,29 @@
-# .pre-commit-hooks.yaml
--   id: security-profile-base
-    name: Security Profile - Base
-    entry: pre-commit
-    language: system
-    files: '.*'
-    pass_filenames: false
-    args:
-      - run
-      - --config
-      - ./.base-security.yaml
-      - --all-files
+-   id: gitleaks
+    name: Gitleaks
+    description: "Scans for hardcoded secrets"
+    entry: gitleaks protect --staged --verbose
+    language: golang
+    types: [text]
 
--   id: security-profile-web-app
-    name: Security Profile - Web Application
-    entry: pre-commit
-    language: system
-    files: '.*'
-    pass_filenames: false
-    args:
-      - run
-      - --config
-      - ./.web-app-security.yaml
-      - --all-files
+-   id: semgrep-sast
+    name: Semgrep SAST
+    description: "Static analysis for security vulnerabilities"
+    entry: semgrep --config=auto --error
+    language: python
+    types: [python]
+    require_serial: true
 
--   id: security-profile-infra
-    name: Security Profile - Infrastructure
-    entry: pre-commit
-    language: system
-    files: '.*'
-    pass_filenames: false
-    args:
-      - run
-      - --config
-      - ./.infra-security.yaml
-      - --all-files
+-   id: checkov-iac
+    name: Checkov IaC
+    description: "Scans infrastructure as code for misconfigurations"
+    entry: checkov -f
+    language: python
+    types: [terraform]
 
--   id: security-profile-mobile
-    name: Security Profile - Mobile
-    entry: pre-commit
+-   id: corporate-security-critical
+    name: Corporate Security Critical
+    description: "Runs all critical security checks"
+    entry: bash -c 'pre-commit run gitleaks && pre-commit run semgrep-sast'
     language: system
-    files: '.*'
     pass_filenames: false
-    args:
-      - run
-      - --config
-      - ./.mobile-security.yaml
-      - --all-files
+    always_run: true

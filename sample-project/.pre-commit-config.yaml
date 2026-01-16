@@ -1,0 +1,6 @@
+# .pre-commit-config.yaml
+repos:
+  - repo: https://github.com/ihrishikesh0896/appsec-hooks
+    rev: 9a36af5e33cfe2ab8e843a846030e60a216b9443 # Or the specific tag/commit you want to use
+    hooks:
+      - id: security-profile-base

@@ -1,184 +1,46 @@
-# AppSec Pre-Commit Hooks
+# AppSec Hooks
 
-Centralized security controls for all repositories. Managed by the AppSec team.
+This repository provides a centralized collection of pre-commit hooks to enforce security best practices across your projects.
 
-> **Move from advisory to authoritative security by treating your controls as a platform, not a suggestion.**
+## Usage
 
-## 🚀 Quick Start
-
-### One-Line Installation
-
-```bash
-curl -sSL https://raw.githubusercontent.com/ihrishikesh0896/appsec-hooks/main/install.sh | bash
-```
-
-### Manual Installation
-
-1. Add to your `.pre-commit-config.yaml`:
+To use these hooks in your project, add the following to your `.pre-commit-config.yaml`:
 
 ```yaml
 repos:
   - repo: https://github.com/ihrishikesh0896/appsec-hooks
-    rev: v1.0.0  # Use latest tagged version
+    rev: main # or a specific tag
     hooks:
-      - id: security-profile-web-app  # Choose your profile
+      - id: corporate-security-critical
+      # Or, use individual hooks:
+      # - id: gitleaks
+      # - id: semgrep-sast
+      # - id: checkov-iac
 ```
 
-2. Install the hooks:
+### Dependencies
 
-```bash
-pre-commit install
-```
+This repository uses `language: golang` and `language: python` for the hooks. `pre-commit` will automatically handle the installation of the necessary tools (Gitleaks, Semgrep, Checkov) in isolated environments. You do not need to install them manually.
 
-## 📋 Available Profiles
+### Hooks
 
-| Profile | ID | Use Case | Tools Included |
-|---------|-----|----------|----------------|
-| **Base** | `security-profile-base` | All repositories | Gitleaks, Semgrep (secrets & security-audit) |
-| **Web App** | `security-profile-web-app` | Web applications | + OWASP Top 10, XSS, SQLi, Bandit, Safety |
-| **Infra** | `security-profile-infra` | Infrastructure-as-Code | + tfsec, Checkov, cfn-lint, K8s rules |
-| **Mobile** | `security-profile-mobile` | Mobile apps | + MobSF rules, SwiftLint |
+- **gitleaks**: Scans for hardcoded secrets.
+- **semgrep-sast**: Performs static analysis for security vulnerabilities.
+- **checkov-iac**: Scans infrastructure as code for misconfigurations.
+- **corporate-security-critical**: A "meta" hook that runs a combination of the most critical security checks (currently Gitleaks and Semgrep).
 
-### Profile Details
+### How it Works for a Beginner Developer
 
-#### Base Profile (`security-profile-base`)
-Minimal security controls suitable for all repositories:
-- **Gitleaks** - Secret detection
-- **Semgrep** - Security audit and secret patterns
-- **Pre-commit hooks** - Private key detection, large file checks
+1.  **Install pre-commit:**
+    ```bash
+    pip install pre-commit
+    ```
 
-#### Web Application Profile (`security-profile-web-app`)
-Comprehensive security for web applications:
-- Everything in Base, plus:
-- **OWASP Top 10** rules via Semgrep
-- **XSS** detection
-- **SQL Injection** detection
-- **Bandit** - Python security linter
-- **Safety** - Python dependency vulnerability scanner
+2.  **Create a `.pre-commit-config.yaml` file** in the root of your project with the content from the "Usage" section above.
 
-#### Infrastructure Profile (`security-profile-infra`)
-Security controls for Infrastructure-as-Code:
-- Everything in Base, plus:
-- **tfsec** - Terraform security scanner
-- **Checkov** - IaC security scanner
-- **cfn-lint** - CloudFormation linter
-- **Kubernetes** rules via Semgrep
+3.  **Install the git hooks:**
+    ```bash
+    pre-commit install
+    ```
 
-#### Mobile Profile (`security-profile-mobile`)
-Security controls for mobile applications:
-- Everything in Base, plus:
-- **MobSF** rules via Semgrep
-- **SwiftLint** - Swift security linter (iOS)
-
-## 🔧 Multi-Profile Configuration
-
-For projects that span multiple domains (e.g., a web app with infrastructure code):
-
-```yaml
-# .pre-commit-config.yaml
-repos:
-  # Primary: Web Application Security Profile
-  - repo: https://github.com/ihrishikesh0896/appsec-hooks
-    rev: v1.0.0
-    hooks:
-      - id: security-profile-web-app
-        stages: [commit]
-
-  # Secondary: Run infra checks only on IaC files
-  - repo: https://github.com/ihrishikesh0896/appsec-hooks
-    rev: v1.0.0
-    hooks:
-      - id: security-profile-infra
-        files: ^(terraform/|k8s/|cloudformation/|\.github/)
-        stages: [commit]
-```
-
-## ⚠️ Exception Process
-
-If a security rule is blocking a legitimate use case:
-
-1. **Do NOT disable the hook** in your repository
-2. **Document the issue** in a Jira ticket (APPSEC project)
-3. **Request an exception** with:
-   - Business justification
-   - Risk assessment
-   - Proposed mitigation
-   - Expiration date
-4. **Get approval** from AppSec team and project leadership
-
-Exceptions are:
-- ✅ Temporary and time-bound
-- ✅ Documented and auditable
-- ✅ Risk-accepted with compensating controls
-- ❌ Never permanent opt-outs
-
-## 📦 Versioning
-
-> **⚠️ Golden Rule: Never point to `main` branch**
-
-```yaml
-# ❌ WRONG - Breaking changes can halt commits company-wide
-rev: main
-
-# ✅ CORRECT - Version-pinned for stability
-rev: v1.0.0
-```
-
-### Updating Hooks
-
-**Manual update:**
-```bash
-pre-commit autoupdate
-```
-
-**Automated with Dependabot:** Add to `.github/dependabot.yml`:
-```yaml
-version: 2
-updates:
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-```
-
-## 🛠️ Useful Commands
-
-```bash
-# Run all hooks on all files
-pre-commit run --all-files
-
-# Run specific hook
-pre-commit run gitleaks --all-files
-
-# Update hook versions
-pre-commit autoupdate
-
-# Skip hooks temporarily (emergency only!)
-git commit --no-verify -m "emergency fix"
-
-# Clear pre-commit cache
-pre-commit clean
-```
-
-## 📊 Compliance & Auditing
-
-With centralized hooks, you can confidently state:
-- ✅ Every repository enforces the same security controls
-- ✅ All changes are version-controlled and auditable
-- ✅ Security updates propagate automatically
-- ✅ Exceptions are documented and time-bound
-
-## 🆘 Support
-
-- **Slack:** #appsec-support
-- **Jira:** APPSEC project
-- **Documentation:** [Internal Wiki Link]
-
-## 📝 Changelog
-
-See [CHANGELOG.md](./CHANGELOG.md) for version history.
-
----
-
-*Maintained by the Application Security Team*
-
+Now, every time you run `git commit`, the security hooks will automatically run. If any issues are found, the commit will be aborted, and the errors will be displayed in your terminal. You can then fix the issues and re-commit your changes.

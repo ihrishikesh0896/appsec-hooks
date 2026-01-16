@@ -10,27 +10,9 @@ repos:
 
   # Option 1: Web Application (most common)
   - repo: https://github.com/ihrishikesh0896/appsec-hooks
-    rev: v1.0.0
+    rev: main
     hooks:
-      - id: security-profile-web-app
-
-  # Option 2: Infrastructure-as-Code
-  # - repo: https://github.com/ihrishikesh0896/appsec-hooks
-  #   rev: v1.0.0
-  #   hooks:
-  #     - id: security-profile-infra
-
-  # Option 3: Mobile Application
-  # - repo: https://github.com/ihrishikesh0896/appsec-hooks
-  #   rev: v1.0.0
-  #   hooks:
-  #     - id: security-profile-mobile
-
-  # Option 4: Base (minimal)
-  # - repo: https://github.com/ihrishikesh0896/appsec-hooks
-  #   rev: v1.0.0
-  #   hooks:
-  #     - id: security-profile-base
+      - id: corporate-security-critical
 
   # ============================================
   # Team-specific hooks (customize as needed)
