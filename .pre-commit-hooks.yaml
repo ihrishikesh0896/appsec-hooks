@@ -5,7 +5,7 @@ repos:
       - id: gitleaks
         name: Gitleaks – Secrets Scanning
         entry: gitleaks detect --source . --redact --verbose
-        language: system
+        language: docker_image
         image: zricethezav/gitleaks:latest
         pass_filenames: false
         stages: [commit]
@@ -14,7 +14,7 @@ repos:
       - id: semgrep-sast
         name: Semgrep – SAST
         entry: semgrep --config=auto --error
-        language: system
+        language: docker_image
         image: semgrep/semgrep
         pass_filenames: false
         stages: [commit]
@@ -23,7 +23,7 @@ repos:
       - id: checkov-iac
         name: Checkov – IaC Scan
         entry: checkov --directory .
-        language: system
+        language: docker_image
         image: bridgecrew/checkov:latest
         pass_filenames: false
         stages: [commit]
@@ -37,7 +37,7 @@ repos:
           pre-commit run semgrep-sast &&
           pre-commit run checkov-iac
           "
-        language: system
+        language: docker_image
         pass_filenames: false
         always_run: true
         stages: [commit]
